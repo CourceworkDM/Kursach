@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.mary.myapplication.MainActivity">
+
+
+    <Button
+        android:text="Мои списки"
+        android:id="@+id/mainActivityButtonMyLists"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        style="@style/Widget.AppCompat.Button.Colored" />
+
+    <Button
+        android:text="Заметки"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainActivityButtonMyNotes"
+        android:layout_below="@+id/mainActivityButtonMyLists"
+        android:layout_marginTop="12dp"
+        style="@style/Widget.AppCompat.Button.Colored" />
+
+    <Button
+        android:text="Магазины"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:id="@+id/mainActivityButtonShops"
+        android:layout_below="@+id/mainActivityButtonMyNotes"
+        style="@style/Widget.AppCompat.Button.Colored" />
+
+    <Button
+        android:text="Расходы"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainActivityButtonCosts"
+        android:layout_marginTop="17dp"
+        android:layout_below="@+id/mainActivityButtonShops"
+        style="@style/Widget.AppCompat.Button.Colored" />
+</RelativeLayout>

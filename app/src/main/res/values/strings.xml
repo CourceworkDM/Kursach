@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Списки покупок</string>
+    <string name="about_title">Списки</string>
+    <string name="title_3">Заметки</string>
+    <string name="title_4">Магазины</string>
+    <string name="title_5">Расходы</string>
+    <string name="title_6">Создать</string>
+    <string name="title_7">СамСписок</string>
+    <string name="title_8">СоздатьЗаметку</string>
+    <string name="title_9">РасходыПериод</string>
+    <string name="title_10">ВыборПериод</string>
+    <string name="title_11">Карта</string>
+
+    <string-array name="products">
+        <item>Магазины</item>
+        <item>Хлеб</item>
+        <item>Мурзик</item>
+        <item>Мурка</item>
+        <item>Васька</item>
+        <item>Томасина</item>
+        <item>Кристина</item>
+        <item>Пушок</item>
+        <item>Дымка</item>
+        <item>Кузя</item>
+        <item>Китти</item>
+        <item>Масяня</item>
+        <item>Симба</item>
+    </string-array>
+</resources>
