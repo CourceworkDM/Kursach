@@ -46,19 +46,19 @@ public class ShopsActivity extends Activity {
             Toast t = Toast.makeText(this, ex.getMessage(),Toast.LENGTH_LONG);
             t.show();
         }
-        editTextShopName.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                // TODO Auto-generated method stub
-                if (event.getAction() == KeyEvent.ACTION_DOWN)
-                    if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                        DB.insert_s(editTextShopName.getText().toString());
-                        updateAdapter();
-                        editTextShopName.setText("");
-                        return true;
-                    }
-                return false;
-            }
-        });
+//        editTextShopName.setOnKeyListener(new View.OnKeyListener() {
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                // TODO Auto-generated method stub
+//                if (event.getAction() == KeyEvent.ACTION_DOWN)
+//                    if (keyCode == KeyEvent.KEYCODE_ENTER) {
+//                        DB.insert_s(editTextShopName.getText().toString());
+//                        updateAdapter();
+//                        editTextShopName.setText("");
+//                        return true;
+//                    }
+//                return false;
+//            }
+//        });
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -66,11 +66,13 @@ public class ShopsActivity extends Activity {
                 TextView textView = (TextView) itemClicked;
                 final String strText = textView.getText().toString(); // текст нажатого элемента
                 AlertDialog.Builder adb=new AlertDialog.Builder(ShopsActivity.this);
-                adb.setTitle("Удалить элемент?");
+                adb.setTitle("Показать ассортимент магазина?");
                 adb.setNegativeButton("Отмена     ", null);
                 adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        DB.delete_s(strText);
+                        //DB.delete_s(strText);
+                        Intent intent = new Intent(ShopsActivity.this, AssortActivity.class);
+                        startActivity(intent);
                         updateAdapter();
                     }});
                 adb.show();
