@@ -150,7 +150,7 @@ public class DBHelper  extends SQLiteOpenHelper {
         }
         return rows;
     }
-    public String[] getShop(String conditionOfChoose)
+    public String[] getShop(String conditionOfChoose) /// убрать, брать с сервиса
     {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM "+ Contract.Shop.TABLE_NAME;
@@ -355,22 +355,22 @@ public class DBHelper  extends SQLiteOpenHelper {
         }
 
     }
-    public String insert_s(String date)
-    {
-        try {
-            SQLiteDatabase db = this.getWritableDatabase();
-            String query = "INSERT INTO " + Contract.Shop.TABLE_NAME +
-                    " (" + Contract.Shop.COLUMN_NAME + ")" +
-                    " VALUES('" + date + "');";
-            db.execSQL(query);
-            return "Создание завершено успешно!";
-        }
-        catch (Exception ex)
-        {
-            return ex.getMessage();
-        }
-
-    }
+//    public String insert_s(String date)
+//    {
+//        try {
+//            SQLiteDatabase db = this.getWritableDatabase();
+//            String query = "INSERT INTO " + Contract.Shop.TABLE_NAME +
+//                    " (" + Contract.Shop.COLUMN_NAME + ")" +
+//                    " VALUES('" + date + "');";
+//            db.execSQL(query);
+//            return "Создание завершено успешно!";
+//        }
+//        catch (Exception ex)
+//        {
+//            return ex.getMessage();
+//        }
+//
+//    }
     public String insert_cost(String date, String money, String dat)
     {
         try {
@@ -572,20 +572,20 @@ public class DBHelper  extends SQLiteOpenHelper {
         }
     }
 
-    public String delete_s(String date)
-    {
-        try {
-            SQLiteDatabase db = this.getWritableDatabase();
-            String query = "DELETE FROM " + Contract.Shop.TABLE_NAME +
-                    " WHERE " + Contract.Shop.COLUMN_NAME + " = '" + date + "';";
-            db.execSQL(query);
-            return "Успешно удалено!";
-        }
-        catch (Exception ex)
-        {
-            return ex.getMessage();
-        }
-    }
+//    public String delete_s(String date)
+//    {
+//        try {
+//            SQLiteDatabase db = this.getWritableDatabase();
+//            String query = "DELETE FROM " + Contract.Shop.TABLE_NAME +
+//                    " WHERE " + Contract.Shop.COLUMN_NAME + " = '" + date + "';";
+//            db.execSQL(query);
+//            return "Успешно удалено!";
+//        }
+//        catch (Exception ex)
+//        {
+//            return ex.getMessage();
+//        }
+//    }
     public String delete_cost(String date)
     {
         try {

@@ -27,12 +27,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-//        String shop = getIntent().getExtras().getString("shop");
-//        Uri gmmIntentUri = Uri.parse("geo:54.32,48.3?q="+shop);
-//        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-//        mapIntent.setPackage("com.google.android.apps.maps");
-//        if (mapIntent.resolveActivity(getPackageManager()) != null) {
-//            startActivity(mapIntent);
-//        }
+        String shop = getIntent().getExtras().getString("shop");
+        Uri gmmIntentUri = Uri.parse("geo:54.32,48.3?q="+shop);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        }
     }
 }
