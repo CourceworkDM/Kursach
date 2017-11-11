@@ -10,12 +10,20 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dmitry.cousework4.api.BaseResponse;
+import com.example.dmitry.cousework4.api.IRestService;
+import com.example.dmitry.cousework4.api.RestServiceProvider;
 import com.example.dmitry.cousework4.database.Contract;
 import com.example.dmitry.cousework4.database.DBHelper;
+import com.example.dmitry.cousework4.models.Shop;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -33,10 +41,11 @@ public class ShopsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         setContentView(R.layout.activity_shops);
         DB = new DBHelper(this, Contract.Shop.TABLE_NAME, null, 1);
-        editTextShopName = (EditText) findViewById(R.id.editText6);
-        listView = (ListView)findViewById(R.id.activity_costs_image_listView_costs);
+        //editTextShopName = (EditText) findViewById(R.id.editText6);
+        listView = (ListView)findViewById(R.id.activity_shops_listView);
         try {
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                     DB.getShop(Contract.Shop._ID + "> 0"));
@@ -108,6 +117,15 @@ public class ShopsActivity extends Activity {
             Toast t = Toast.makeText(this, ex.getMessage(),Toast.LENGTH_LONG);
             t.show();
         }
+    }
+
+    //getting data from server
+    private void getDataFromServer(ListView listView) {
+        IRestService restService =  RestServiceProvider.newInstance().getiRestService();
+        List<Shop> shops = restService.getAllShop().map(BaseResponse::getData);
+        }
+
+
     }
 }
 
