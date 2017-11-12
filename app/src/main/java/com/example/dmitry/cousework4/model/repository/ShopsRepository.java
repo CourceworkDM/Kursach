@@ -1,11 +1,9 @@
-package com.example.dmitry.cousework4.repository;
-
-import android.widget.ListView;
+package com.example.dmitry.cousework4.model.repository;
 
 import com.example.dmitry.cousework4.api.BaseResponse;
 import com.example.dmitry.cousework4.api.IRestService;
 import com.example.dmitry.cousework4.api.RestServiceProvider;
-import com.example.dmitry.cousework4.models.Shop;
+import com.example.dmitry.cousework4.model.models.Shop;
 
 import java.util.List;
 
@@ -21,5 +19,6 @@ public class ShopsRepository {
 
     public Observable<List<Shop>> getDataFromServer() {
         return restService.getAllShop().map(BaseResponse::getData);
+
     }
 }

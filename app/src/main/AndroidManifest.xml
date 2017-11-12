@@ -27,7 +27,7 @@
         </activity>
 
 
-        <activity android:name=".ShopsActivity">
+        <activity android:name=".activity.ShopsActivity">
             android:label = "@string/title_4">
         </activity>
 

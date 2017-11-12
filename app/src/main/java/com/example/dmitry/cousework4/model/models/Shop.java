@@ -1,4 +1,4 @@
-package com.example.dmitry.cousework4.models;
+package com.example.dmitry.cousework4.model.models;
 
 import com.google.gson.annotations.SerializedName;
 
