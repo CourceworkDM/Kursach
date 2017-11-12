@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,10 +21,15 @@ import com.example.dmitry.cousework4.api.IRestService;
 import com.example.dmitry.cousework4.api.RestServiceProvider;
 import com.example.dmitry.cousework4.database.Contract;
 import com.example.dmitry.cousework4.database.DBHelper;
+//import com.example.dmitry.cousework4.models.Shop;
 import com.example.dmitry.cousework4.models.Shop;
+import com.example.dmitry.cousework4.repository.ShopsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -32,10 +38,13 @@ import java.util.List;
 
 public class ShopsActivity extends Activity {
 
+    private static final String LOG_TAG = "ShopsActivity";
     EditText editTextShopName;
     ArrayAdapter<String> adapter;
     ListView listView;
+    List<Shop> list = new ArrayList<>();
     public DBHelper DB;
+    private final ShopsRepository shopsRepository = new ShopsRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +115,8 @@ public class ShopsActivity extends Activity {
                 adb.show();
             }
         });
+
+        getDataFromServer(listView);
     }
     public void updateAdapter(){
         try {
@@ -121,11 +132,15 @@ public class ShopsActivity extends Activity {
 
     //getting data from server
     private void getDataFromServer(ListView listView) {
-        IRestService restService =  RestServiceProvider.newInstance().getiRestService();
-        List<Shop> shops = restService.getAllShop().map(BaseResponse::getData);
-        }
-
-
+       // ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getApplicationContext());
+        shopsRepository.getDataFromServer()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(shop_one -> {
+                    Log.d(LOG_TAG, shop_one.toString());
+                }, throwable -> {
+                    Log.e(LOG_TAG, "ERROR");
+                });
     }
 }
 
