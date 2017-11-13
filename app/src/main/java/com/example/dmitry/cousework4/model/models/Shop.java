@@ -8,6 +8,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class Shop {
 
+    public Shop() { }
+
     @SerializedName("id")
     private int id;
 

@@ -2,10 +2,11 @@ package com.example.dmitry.cousework4.presenter;
 
 import android.util.Log;
 
-import com.example.dmitry.cousework4.model.models.Product;
+
 import com.example.dmitry.cousework4.model.models.Shop;
 import com.example.dmitry.cousework4.model.repository.ShopsRepository;
 import com.example.dmitry.cousework4.view.Iview;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +37,11 @@ public class PresenterShop{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(shop_one -> {
                     if (view != null) {
+                        Log.d(LOG_TAG, shop_one.toString());
                         view.onReseived(shop_one);
                     }
                         }, throwable  -> {
-                            Log.d(LOG_TAG, throwable.getMessage());
+                            Log.e(LOG_TAG, throwable.getMessage());
 
                             if (view == null) {
                                 Log.e(LOG_TAG, "ERROR: variable #view# is null");
