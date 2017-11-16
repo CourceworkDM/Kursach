@@ -63,7 +63,6 @@ public class ShopsActivity extends Activity implements Iview<Shop>{
                 presenterShop.filterShops(list));
         listView.setAdapter(adapter);
         Log.d(LOG_TAG, String.valueOf(adapter.getCount()));
-
     }
 
 

@@ -54,6 +54,7 @@ public class PresenterShop{
         view = null;
     }
 
+    // may be will need in future
     public String[] filterShops(List<Shop> list) {
         List<String> filterShop = new ArrayList<>();
         for( Shop i: list) {
