@@ -1,5 +1,7 @@
 package com.example.dmitry.cousework4.api;
 
+import com.example.dmitry.cousework4.model.models.Comment;
+import com.example.dmitry.cousework4.model.models.Product;
 import com.example.dmitry.cousework4.model.models.Shop;
 
 import org.json.JSONArray;
@@ -11,7 +13,11 @@ import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by dmitry on 11.11.17.
@@ -23,6 +29,21 @@ public interface IRestService {
 
     @GET("getallshops")
     Observable<List<Shop>>getAllShop();
+
+    @GET("get_products_from/{idShop}")
+    Observable<List<Product>> getProductFromShop(@Path("idShop") int id);
+
+    @GET("get_comments_from/{idShop}")
+    Observable<List<Comment>> getCommentsFrom(@Path("idShop") int id);
+
+    @POST("create_comment")
+    Observable<Comment> createComment(@Body Comment comment);
+
+    @POST("update_comment")
+    Observable<Comment> updateComment(@Body Comment comment);
+
+    @POST("delete_comment")
+    Observable<Comment> deleteComment(@Body Comment comment);
 
 
 }
