@@ -14,26 +14,13 @@ public class Contract {
 
         public final static String _ID = BaseColumns._ID;
         public final static String COLUMN_NAME = "product_name";
-      //  public final static String COLUMN_CITY = "city";
-        //public final static String COLUMN_GENDER = "gender";
-       // public final static String COLUMN_AGE = "age";
 
-      //  public static final int GENDER_FEMALE = 0;
-       // public static final int GENDER_MALE = 1;
-       // public static final int GENDER_UNKNOWN = 2;
     }
     public static final class Note implements BaseColumns {
         public final static String TABLE_NAME = "Note";
 
         public final static String _ID = BaseColumns._ID;
         public final static String COLUMN_NAME = "Note_name";
-
-    }
-    public static final class Shop implements BaseColumns {
-        public final static String TABLE_NAME = "Shop";
-
-        public final static String _ID = BaseColumns._ID;
-        public final static String COLUMN_NAME = "Shop_name";
 
     }
     public static final class Waste implements BaseColumns {

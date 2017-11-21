@@ -71,7 +71,7 @@ String list;
         listView = (ListView)findViewById(R.id.activity_costs_image_listView_costs);
         button8 = (Button) findViewById(R.id.button8);
         button8.setText(list);
-        DB2.insert_p();
+       // DB2.insert_p();
         try {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                     DB.getTimeDoing(Contract.Entry._ID + "> 0"));

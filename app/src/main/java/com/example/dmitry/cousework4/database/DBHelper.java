@@ -34,10 +34,6 @@ public class DBHelper  extends SQLiteOpenHelper {
                 + Contract.Note.COLUMN_NAME + " TEXT NOT NULL); ";
         db.execSQL(SQL_CREATE_TA);
 
-        String SQL_CREATE_TAB = "CREATE TABLE "+ Contract.Shop.TABLE_NAME+ " ("
-                + Contract.Shop._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + Contract.Shop.COLUMN_NAME + " TEXT NOT NULL); ";
-        db.execSQL(SQL_CREATE_TAB);
         String SQL_CREATE_T = "CREATE TABLE "+ Contract.Waste.TABLE_NAME+ " ("
                 + Contract.Waste._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + Contract.Waste.COLUMN_NAME + " TEXT NOT NULL,"
@@ -76,7 +72,6 @@ public class DBHelper  extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE "+ Contract.Entry.TABLE_NAME);
         db.execSQL("DROP TABLE "+ Contract.Note.TABLE_NAME);
-        db.execSQL("DROP TABLE "+ Contract.Shop.TABLE_NAME);
         db.execSQL("DROP TABLE "+ Contract.Waste.TABLE_NAME);
         db.execSQL("DROP TABLE "+ Contract.Price.TABLE_NAME);
         db.execSQL("DROP TABLE "+ Contract.List.TABLE_NAME);
@@ -113,7 +108,6 @@ public class DBHelper  extends SQLiteOpenHelper {
         }
         catch (Exception ex)
         {
-//??
         }
         finally {
             cursor.close();
@@ -133,31 +127,6 @@ public class DBHelper  extends SQLiteOpenHelper {
         String[] rows = new String[cursor.getCount()];
 
         int indexTime = cursor.getColumnIndex(Contract.Note.COLUMN_NAME);
-        int indexRows = 0;
-        try
-        {
-            while (cursor.moveToNext())
-            {
-                rows[indexRows] = cursor.getString(indexTime);
-                indexRows++;
-            }
-        }
-        catch (Exception ex)
-        {
-        }
-        finally {
-            cursor.close();
-        }
-        return rows;
-    }
-    public String[] getShop(String conditionOfChoose) /// убрать, брать с сервиса
-    {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM "+ Contract.Shop.TABLE_NAME;
-        if(conditionOfChoose != "") query+= " WHERE "+ conditionOfChoose+";";
-        Cursor cursor = db.rawQuery(query, null);
-        String[] rows = new String[cursor.getCount()];
-        int indexTime = cursor.getColumnIndex(Contract.Shop.COLUMN_NAME);
         int indexRows = 0;
         try
         {
@@ -284,7 +253,6 @@ public class DBHelper  extends SQLiteOpenHelper {
         }
         catch (Exception ex)
         {
-//??
         }
         finally {
             cursor.close();
@@ -313,7 +281,6 @@ public class DBHelper  extends SQLiteOpenHelper {
         }
         catch (Exception ex)
         {
-//??
         }
         finally {
             cursor.close();
@@ -355,22 +322,7 @@ public class DBHelper  extends SQLiteOpenHelper {
         }
 
     }
-//    public String insert_s(String date)
-//    {
-//        try {
-//            SQLiteDatabase db = this.getWritableDatabase();
-//            String query = "INSERT INTO " + Contract.Shop.TABLE_NAME +
-//                    " (" + Contract.Shop.COLUMN_NAME + ")" +
-//                    " VALUES('" + date + "');";
-//            db.execSQL(query);
-//            return "Создание завершено успешно!";
-//        }
-//        catch (Exception ex)
-//        {
-//            return ex.getMessage();
-//        }
-//
-//    }
+
     public String insert_cost(String date, String money, String dat)
     {
         try {
@@ -395,94 +347,6 @@ public class DBHelper  extends SQLiteOpenHelper {
                     " (" + Contract.Waste.COLUMN_NAME + "," + Contract.Waste.COLUMN_NAME_1 + "," + Contract.Waste.COLUMN_NAME_2 +")" +
                     " VALUES('" + "test" + "','" + "300"  + "','" + "2017/5/10" + "');";
             db.execSQL(query);
-            return "Создание завершено успешно!";
-        }
-        catch (Exception ex)
-        {
-            return ex.getMessage();
-        }
-
-    }
-    public String insert_p()
-    {
-        try {
-            SQLiteDatabase db = this.getWritableDatabase();
-            String query = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Молоко" + "','" + "35" + "');";
-            db.execSQL(query);
-            String quer = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Хлеб" + "','" + "20" + "');";
-            db.execSQL(quer);
-            String que = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Крупа" + "','" + "50" + "');";
-            db.execSQL(que);
-            String qu = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Соус" + "','" + "100" + "');";
-            db.execSQL(qu);
-            String q = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Косметика" + "','" + "500" + "');";
-            db.execSQL(q);
-            String qq = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Овощи" + "','" + "180" + "');";
-            db.execSQL(qq);
-            String qqt = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Минеральная вода" + "','" + "70" + "');";
-            db.execSQL(qqt);
-            String qqte = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Шоколад" + "','" + "60" + "');";
-            db.execSQL(qqte);
-            String qqto = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Конфеты" + "','" + "200" + "');";
-            db.execSQL(qqto);
-            String qqq = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Мясо" + "','" + "490" + "');";
-            db.execSQL(qqq);
-            String qqy = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Бытовая химия" + "','" + "345" + "');";
-            db.execSQL(qqy);
-            String qqp = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Сыр" + "','" + "110" + "');";
-            db.execSQL(qqp);
-            String qqpp = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Сметана" + "','" + "45" + "');";
-            db.execSQL(qqpp);
-            String qqpw = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Носки" + "','" + "67" + "');";
-            db.execSQL(qqpw);
-            String qqpz = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Торт" + "','" + "410" + "');";
-            db.execSQL(qqpz);
-            String qqpi = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Шарики" + "','" + "150" + "');";
-            db.execSQL(qqpi);
-            String qqpq = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Лимонад" + "','" + "90" + "');";
-            db.execSQL(qqpq);
-            String qqpt = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Цветы" + "','" + "430" + "');";
-            db.execSQL(qqpt);
-            String qqpn = "INSERT INTO " + Contract.Price.TABLE_NAME +
-                    " (" + Contract.Price.COLUMN_NAME + "," + Contract.Price.COLUMN_NAME_1 +")" +
-                    " VALUES('" + "Фрукты" + "','" + "280" + "');";
-            db.execSQL(qqpn);
             return "Создание завершено успешно!";
         }
         catch (Exception ex)
@@ -572,20 +436,6 @@ public class DBHelper  extends SQLiteOpenHelper {
         }
     }
 
-//    public String delete_s(String date)
-//    {
-//        try {
-//            SQLiteDatabase db = this.getWritableDatabase();
-//            String query = "DELETE FROM " + Contract.Shop.TABLE_NAME +
-//                    " WHERE " + Contract.Shop.COLUMN_NAME + " = '" + date + "';";
-//            db.execSQL(query);
-//            return "Успешно удалено!";
-//        }
-//        catch (Exception ex)
-//        {
-//            return ex.getMessage();
-//        }
-//    }
     public String delete_cost(String date)
     {
         try {
