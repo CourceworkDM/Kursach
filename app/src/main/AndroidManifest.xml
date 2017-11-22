@@ -55,7 +55,7 @@
             android:label = "@string/title_12">
         </activity>
 
-        <activity android:name=".CommentActivity">
+        <activity android:name=".activity.CommentActivity">
             android:label = "@string/title_13">
         </activity>
 
