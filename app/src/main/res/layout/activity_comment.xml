@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--android:orientation="vertical" android:layout_width="match_parent"-->
-<!--android:layout_height="match_parent">-->
-
-<!--</LinearLayout>-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:id="@+id/activity_comment"
@@ -26,8 +21,6 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignRight="@+id/button"
-        android:layout_alignEnd="@+id/button"
         android:id="@+id/activity_comment_listView"
         android:layout_below="@+id/button" />
 </RelativeLayout>

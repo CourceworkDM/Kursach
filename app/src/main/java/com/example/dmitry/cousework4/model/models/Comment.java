@@ -35,4 +35,9 @@ public class Comment {
     public String getShopFK() {
         return shopFK;
     }
+
+    @Override
+    public String toString() {
+        return "Оценка: "+ rate + "\n" + commentLine;
+    }
 }

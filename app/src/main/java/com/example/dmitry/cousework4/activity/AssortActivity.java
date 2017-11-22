@@ -1,8 +1,10 @@
 package com.example.dmitry.cousework4.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -16,7 +18,6 @@ import java.util.List;
 
 public class AssortActivity extends Activity implements Iview<Product>{
     private static final String LOG_TAG ="AssortActivity" ;
-    private Button button;
     private Button buttonComment;
     private final PresenterProducts presenter = new PresenterProducts();
     ListView listView;
@@ -29,6 +30,8 @@ public class AssortActivity extends Activity implements Iview<Product>{
         buttonComment = findViewById(R.id.activity_assort_buttonComment);
         listView = findViewById(R.id.activity_assort_listView);
         presenter.attachView(this);
+
+        buttonComment.setOnClickListener((View view) -> toCommentActivity());
     }
 
     @Override
@@ -49,5 +52,11 @@ public class AssortActivity extends Activity implements Iview<Product>{
     protected void onDestroy() {
         presenter.detachView();
         super.onDestroy();
+    }
+
+    private void toCommentActivity() {
+        Intent intent = new Intent(AssortActivity.this, CommentActivity.class);
+        intent.putExtra("id", getIntent().getIntExtra("id", -1));
+        startActivity(intent);
     }
 }

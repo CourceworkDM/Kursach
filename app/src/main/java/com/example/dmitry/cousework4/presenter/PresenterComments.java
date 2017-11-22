@@ -33,7 +33,6 @@ public class PresenterComments {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(comments -> {
                             if (view != null) {
-                                //Log.d(LOG_TAG, shop_one.toString());
                                 view.onReseived(comments);
                             }
                         }, throwable  -> {
