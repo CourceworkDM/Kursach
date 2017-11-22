@@ -1,7 +1,10 @@
 package com.example.dmitry.cousework4.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -19,6 +22,7 @@ import java.util.List;
 
 public class CommentActivity extends Activity implements Iview<Comment>{
     private ListView listView;
+    private FloatingActionButton addComment;
     private final PresenterComments presenter = new PresenterComments();
 
     @Override
@@ -26,6 +30,8 @@ public class CommentActivity extends Activity implements Iview<Comment>{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
         listView = findViewById(R.id.activity_comment_listView);
+        addComment = findViewById(R.id.activity_comment_floatingActionButton);
+        addComment.setOnClickListener((View view) -> toCreateComment());
         presenter.attachView(this);
     }
 
@@ -45,5 +51,12 @@ public class CommentActivity extends Activity implements Iview<Comment>{
     protected void onDestroy() {
         presenter.detachView();
         super.onDestroy();
+    }
+
+    private void toCreateComment() {
+        Intent intent = new Intent(CommentActivity.this, ActivityCommentCrUpd.class);
+        intent.putExtra("id", getIntent().getIntExtra("id", -1));
+        startActivity(intent);
+
     }
 }

@@ -24,6 +24,7 @@ public class ActivityCommentCrUpd extends Activity implements Iview<Comment> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_cr_upd);
+
         buttonToServer = findViewById(R.id.activity_comment_cr_upd_button_send);
         buttonToServer.setOnClickListener((View view)-> sendToServer());
         etComment = findViewById(R.id.activity_comment_cr_upd_edittext);
@@ -47,6 +48,5 @@ public class ActivityCommentCrUpd extends Activity implements Iview<Comment> {
         int rate = Integer.valueOf(rateComment.getText().toString());
         int id = getIntent().getIntExtra("id", -1);
         presenter.sendNewComment(textcomment, rate, id);
-
     }
 }

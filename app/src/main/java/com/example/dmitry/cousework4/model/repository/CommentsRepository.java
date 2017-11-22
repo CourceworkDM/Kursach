@@ -20,7 +20,7 @@ public class CommentsRepository {
         return restService.getCommentsFrom(id);
     }
 
-    public Observable<Integer> sendNewCommentToServer(Comment comment) {
+    public Observable<Integer> sendNewCommentToServer(List<Comment> comment) {
         return restService.createComment(comment);
     }
 

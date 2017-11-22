@@ -8,6 +8,9 @@ import com.example.dmitry.cousework4.model.repository.CommentsRepository;
 import com.example.dmitry.cousework4.model.repository.ProductsRepository;
 import com.example.dmitry.cousework4.view.Iview;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -50,9 +53,11 @@ public class PresenterComments {
         Comment newComment = new Comment();
         newComment.setCommentLine(comment);
         newComment.setRate(rate);
-        newComment.setId(1);//все равно это изменится сервером
+        newComment.setShopFK(String.valueOf(id));//все равно это изменится сервером
+        List<Comment> list = new ArrayList<>();
+        list.add(newComment);
 
-        repository.sendNewCommentToServer(newComment)
+        repository.sendNewCommentToServer(list)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(newId -> newComment.setId(newId),

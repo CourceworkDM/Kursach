@@ -3,6 +3,7 @@ package com.example.dmitry.cousework4.api;
 import com.example.dmitry.cousework4.model.models.Comment;
 import com.example.dmitry.cousework4.model.models.Product;
 import com.example.dmitry.cousework4.model.models.Shop;
+import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,6 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.HEAD;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -37,7 +39,7 @@ public interface IRestService {
     Observable<List<Comment>> getCommentsFrom(@Path("idShop") int id);
 
     @POST("create_comment")
-    Observable<Integer> createComment(@Body Comment comment);
+    Observable<Integer> createComment(@Body List<Comment> comment);
 
     @POST("update_comment")
     void updateComment(@Body Comment comment);
