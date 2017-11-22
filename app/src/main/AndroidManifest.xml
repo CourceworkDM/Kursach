@@ -16,56 +16,41 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".MyListsActivity">
             android:label = "@string/about_title">
         </activity>
-
-
         <activity android:name=".NotesActivity">
             android:label = "@string/title_3">
         </activity>
-
-
         <activity android:name=".activity.ShopsActivity">
             android:label = "@string/title_4">
         </activity>
-
-
         <activity android:name=".ListProductsActivity">
             android:label = "@string/title_7">
         </activity>
-
-
         <activity android:name=".CostsImageActivity">
             android:label = "@string/title_9">
         </activity>
-
-
         <activity android:name=".CostsCalendarActivity">
             android:label = "@string/title_10">
         </activity>
-
-
         <activity android:name=".MapsActivity">
             android:label = "@string/title_11">
         </activity>
-
         <activity android:name=".activity.AssortActivity">
             android:label = "@string/title_12">
         </activity>
-
         <activity android:name=".activity.CommentActivity">
-            android:label = "@string/title_13">
-        </activity>
+            android:label = "@string/title_13"></activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDbXu0ViBfW14wwzCkP1xBwjFTyQ6LGJks"/>
+            android:value="AIzaSyDbXu0ViBfW14wwzCkP1xBwjFTyQ6LGJks" />
+
+        <activity android:name=".activity.ActivityCommentCrUpd"></activity>
     </application>
 
 </manifest>

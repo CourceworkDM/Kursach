@@ -19,4 +19,9 @@ public class CommentsRepository {
     public Observable<List<Comment>> getCommentsFromShop(int id) {
         return restService.getCommentsFrom(id);
     }
+
+    public Observable<Integer> sendNewCommentToServer(Comment comment) {
+        return restService.createComment(comment);
+    }
+
 }

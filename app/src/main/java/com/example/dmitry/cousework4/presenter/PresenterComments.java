@@ -27,7 +27,7 @@ public class PresenterComments {
         this.view = view;
     }
 
-    public void loadProductsFrom(int id) {
+    public void loadCommentsFrom(int id) {
         repository.getCommentsFromShop(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -43,6 +43,20 @@ public class PresenterComments {
                             }
                         }
                 );
+    }
+
+    public void sendNewComment(String comment,int rate, int id) {
+
+        Comment newComment = new Comment();
+        newComment.setCommentLine(comment);
+        newComment.setRate(rate);
+        newComment.setId(1);//все равно это изменится сервером
+
+        repository.sendNewCommentToServer(newComment)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(newId -> newComment.setId(newId),
+                        throwable -> Log.e(LOG_TAG, throwable.getMessage()));
     }
 
     public void detachView() {

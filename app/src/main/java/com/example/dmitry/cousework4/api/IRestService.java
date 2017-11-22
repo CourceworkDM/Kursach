@@ -37,13 +37,13 @@ public interface IRestService {
     Observable<List<Comment>> getCommentsFrom(@Path("idShop") int id);
 
     @POST("create_comment")
-    Observable<Comment> createComment(@Body Comment comment);
+    Observable<Integer> createComment(@Body Comment comment);
 
     @POST("update_comment")
-    Observable<Comment> updateComment(@Body Comment comment);
+    void updateComment(@Body Comment comment);
 
     @POST("delete_comment")
-    Observable<Comment> deleteComment(@Body Comment comment);
+    void deleteComment(@Body Comment comment);
 
 
 }

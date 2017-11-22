@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.dmitry.cousework4.activity.ActivityCommentCrUpd">
+
+    <TextView
+        android:id="@+id/activity_comment_cr_upd_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Написать отзыв"
+        android:textSize="@dimen/textsize_header_text"/>
+
+    <EditText
+        android:id="@+id/activity_comment_cr_upd_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_comment_cr_upd_textview"
+        android:layout_margin="13dp"
+        android:textSize="@dimen/textsize_simple_text"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:maxLength="256"
+        android:hint="Напишите сюда, что Вы думаете о магазине"/>
+
+
+    <EditText
+        android:id="@+id/activity_comment_cr_upd_ratetext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:maxLength="1"
+        android:hint="Поставьте оценку магазину"
+        android:gravity="center"
+        android:layout_below="@+id/activity_comment_cr_upd_edittext"/>
+
+    <Button
+        android:id="@+id/activity_comment_cr_upd_button_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/activity_comment_cr_upd_ratetext"
+        android:text="Отправить на сервер"
+        android:textSize="@dimen/textsize_simple_text"
+        android:gravity="center"
+        android:layout_marginTop="223dp"/>
+
+</RelativeLayout>

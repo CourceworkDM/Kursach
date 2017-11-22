@@ -31,7 +31,7 @@ public class CommentActivity extends Activity implements Iview<Comment>{
 
     @Override
     protected void onStart() {
-        presenter.loadProductsFrom(getIntent().getIntExtra("id", -1));
+        presenter.loadCommentsFrom(getIntent().getIntExtra("id", -1));
         super.onStart();
     }
 

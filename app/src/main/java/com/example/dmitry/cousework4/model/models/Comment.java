@@ -36,8 +36,25 @@ public class Comment {
         return shopFK;
     }
 
+    public void setShopFK(String shopFK) {
+        this.shopFK = shopFK;
+    }
+
+    public void setCommentLine(String commentLine) {
+        this.commentLine = commentLine;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Оценка: "+ rate + "\n" + commentLine;
     }
+
 }
