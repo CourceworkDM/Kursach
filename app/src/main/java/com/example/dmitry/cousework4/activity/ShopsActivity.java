@@ -1,35 +1,19 @@
 package com.example.dmitry.cousework4.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.dmitry.cousework4.AssortActivity;
-import com.example.dmitry.cousework4.MapsActivity;
 import com.example.dmitry.cousework4.R;
-import com.example.dmitry.cousework4.database.Contract;
-import com.example.dmitry.cousework4.database.DBHelper;
 //import com.example.dmitry.cousework4.models.models.Shop;
 import com.example.dmitry.cousework4.model.models.Shop;
-import com.example.dmitry.cousework4.model.repository.ShopsRepository;
 import com.example.dmitry.cousework4.presenter.PresenterShop;
 import com.example.dmitry.cousework4.view.Iview;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -47,6 +31,7 @@ public class ShopsActivity extends Activity implements Iview<Shop>{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shops);
         listView = findViewById(R.id.activity_shops_listView);
+        listView.setOnItemClickListener((adapterView, view, i, l) -> onClickItemListView(i));
         presenterShop.attachView(this);
     }
 
@@ -59,8 +44,7 @@ public class ShopsActivity extends Activity implements Iview<Shop>{
 
     @Override
     public void onReseived(List<Shop> list) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
-                presenterShop.filterShops(list));
+        ArrayAdapter<Shop> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         listView.setAdapter(adapter);
         Log.d(LOG_TAG, String.valueOf(adapter.getCount()));
     }
@@ -71,6 +55,13 @@ public class ShopsActivity extends Activity implements Iview<Shop>{
     protected void onDestroy() {
         presenterShop.detachView();
         super.onDestroy();
+    }
+
+    private void onClickItemListView(int position) {
+        int id = ((Shop) listView.getItemAtPosition(position)).getId();//получаем id выбранного магазина
+        Intent intent = new Intent(ShopsActivity.this, AssortActivity.class);
+        intent.putExtra("id", id);
+        startActivity(intent);
     }
 }
 

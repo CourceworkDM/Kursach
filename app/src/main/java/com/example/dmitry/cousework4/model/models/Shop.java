@@ -30,4 +30,9 @@ public class Shop {
     public String getAdress() {
         return adress;
     }
+
+    @Override
+    public String toString() {
+        return name + " на " + adress;
+    }
 }

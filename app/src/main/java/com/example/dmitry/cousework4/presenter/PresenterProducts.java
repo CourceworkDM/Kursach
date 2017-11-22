@@ -2,38 +2,37 @@ package com.example.dmitry.cousework4.presenter;
 
 import android.util.Log;
 
-import com.example.dmitry.cousework4.model.models.Shop;
-import com.example.dmitry.cousework4.model.repository.ShopsRepository;
+import com.example.dmitry.cousework4.model.models.Product;
+import com.example.dmitry.cousework4.model.repository.ProductsRepository;
 import com.example.dmitry.cousework4.view.Iview;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Created by dmitry on 12.11.17.
+ * Created by dmitry on 22.11.17.
  */
 
-public class PresenterShop{
+public class PresenterProducts {
+    private static final String LOG_TAG = "PresenterProduct";
 
-    private static final String LOG_TAG = "PresenterShop";
+    private Iview<Product> view;
 
-    private Iview<Shop> view;
+    private final ProductsRepository repository = new ProductsRepository();
 
-    private final ShopsRepository repository = new ShopsRepository();
-
-    public void attachView(Iview<Shop> view) {
+    public void attachView(Iview<Product> view) {
         this.view = view;
     }
 
-    public void loadShops() {
-        repository.getDataFromServer()
+    public void loadProductsFrom(int id) {
+        repository.getProductFromShop(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(shop_one -> {
-                    if (view != null) {
-                        //Log.d(LOG_TAG, shop_one.toString());
-                        view.onReseived(shop_one);
-                    }
+                .subscribe(products -> {
+                            if (view != null) {
+                                //Log.d(LOG_TAG, shop_one.toString());
+                                view.onReseived(products);
+                            }
                         }, throwable  -> {
                             Log.e(LOG_TAG, throwable.getMessage());
 
@@ -47,4 +46,5 @@ public class PresenterShop{
     public void detachView() {
         view = null;
     }
+
 }

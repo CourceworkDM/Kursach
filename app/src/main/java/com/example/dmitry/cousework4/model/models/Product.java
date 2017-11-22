@@ -19,4 +19,9 @@ public class Product {
 
     @SerializedName("shopFK")
     private int shopFK;
+
+    @Override
+    public String toString() {
+        return name + "\n" + price + "p";
+    }
 }
