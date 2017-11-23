@@ -40,6 +40,14 @@ public class Contract {
         public final static String COLUMN_NAME_1 = "product_price";
 
     }
+    public static final class Basket implements BaseColumns {
+        public final static String TABLE_NAME = "Basket";
+
+        public final static String _ID = BaseColumns._ID;
+        public final static String COLUMN_NAME = "product";
+       // public final static String COLUMN_NAME_1 = "product_price";
+
+    }
     public static final class List implements BaseColumns {
         public final static String TABLE_NAME = "List";
 

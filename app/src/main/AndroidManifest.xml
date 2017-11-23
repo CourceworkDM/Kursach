@@ -41,6 +41,9 @@
             android:label = "@string/title_9">
         </activity>
 
+        <activity android:name=".activity.BasketActivity">
+            android:label = "@string/title_14">
+        </activity>
 
         <activity android:name=".CostsCalendarActivity">
             android:label = "@string/title_10">
@@ -58,6 +61,7 @@
         <activity android:name=".activity.CommentActivity">
             android:label = "@string/title_13">
         </activity>
+
 
         <meta-data
             android:name="com.google.android.gms.version"
