@@ -54,10 +54,13 @@ public class PresenterComments {
         newComment.setCommentLine(comment);
         newComment.setRate(rate);
         newComment.setShopFK(String.valueOf(id));//все равно это изменится сервером
-        List<Comment> list = new ArrayList<>();
-        list.add(newComment);
+//        List<Comment> list = new ArrayList<>();
+//        list.add(newComment);
+//        Comment[] mass = new Comment[1];
+//        mass[0] = newComment;
 
-        repository.sendNewCommentToServer(list)
+
+        repository.sendNewCommentToServer(newComment)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(newId -> newComment.setId(newId),

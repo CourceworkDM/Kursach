@@ -11,13 +11,18 @@ import org.json.JSONObject;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HEAD;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -38,8 +43,9 @@ public interface IRestService {
     @GET("get_comments_from/{idShop}")
     Observable<List<Comment>> getCommentsFrom(@Path("idShop") int id);
 
+    @Multipart
     @POST("create_comment")
-    Observable<Integer> createComment(@Body List<Comment> comment);
+    Observable<Integer> createComment(@Part("comment") Comment comment);// не использовал @Body, так как сервер принимает Form
 
     @POST("update_comment")
     void updateComment(@Body Comment comment);
