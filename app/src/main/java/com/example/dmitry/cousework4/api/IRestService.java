@@ -3,28 +3,17 @@ package com.example.dmitry.cousework4.api;
 import com.example.dmitry.cousework4.model.models.Comment;
 import com.example.dmitry.cousework4.model.models.Product;
 import com.example.dmitry.cousework4.model.models.Shop;
-import com.google.gson.annotations.SerializedName;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Retrofit;
+
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.HEAD;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 /**
  * Created by dmitry on 11.11.17.

@@ -7,9 +7,6 @@ import com.example.dmitry.cousework4.model.models.Comment;
 import java.util.List;
 
 import io.reactivex.Observable;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
 
 /**
  * Created by dmitry on 22.11.17.
