@@ -12,6 +12,7 @@
     <string name="title_11">Карта</string>
     <string name="title_12">Ассортимент</string>
     <string name="title_13">Отзывы</string>
+    <string name="title_14">Корзина</string>
 
     <string-array name="products">
         <item>Магазины</item>
