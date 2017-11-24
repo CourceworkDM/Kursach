@@ -1,6 +1,7 @@
 package com.example.dmitry.cousework4.presenter;
 
 import android.util.Log;
+import android.util.Pair;
 
 import com.example.dmitry.cousework4.model.models.Comment;
 import com.example.dmitry.cousework4.model.repository.CommentsRepository;
@@ -59,6 +60,24 @@ public class PresenterComments {
 
     public void detachView() {
         view = null;
+    }
+
+
+    public Pair<Integer, Boolean> checkRate(String rate) {
+        Pair<Integer, Boolean> result;
+        int rateCheck = 0;
+
+        try {
+            rateCheck = Integer.valueOf(rate);
+        }
+        catch (Exception ex) {
+            return new Pair<>(rateCheck, false);
+        }
+
+        if (rateCheck > 0 && rateCheck < 6) {
+            return new Pair<>(rateCheck, true);
+        }
+        return new Pair<>(rateCheck, false);
     }
 
 }

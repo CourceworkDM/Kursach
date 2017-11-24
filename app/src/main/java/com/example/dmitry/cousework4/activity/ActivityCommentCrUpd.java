@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.dmitry.cousework4.R;
 import com.example.dmitry.cousework4.model.models.Comment;
@@ -45,8 +46,22 @@ public class ActivityCommentCrUpd extends Activity implements Iview<Comment> {
 
     private void sendToServer() {
         String textcomment = etComment.getText().toString();
-        int rate = Integer.valueOf(rateComment.getText().toString());
-        int id = getIntent().getIntExtra("id", -1);
-        presenter.sendNewComment(textcomment, rate, id);
+
+        //проверка данных
+        if (presenter.checkRate(rateComment.getText().toString()).second) {
+            int rate = presenter.checkRate(rateComment.getText().toString()).first;
+            int id = getIntent().getIntExtra("id", -1);
+            presenter.sendNewComment(textcomment, rate, id);
+            Toast message = Toast.makeText(this,"Комментарий отправлен!", Toast.LENGTH_SHORT);
+            message.show();
+            this.finish();
+        }
+        else {
+            Toast message = Toast.makeText(this,"Неправильная оценка! (Она должна быть в диапазоне от 1 до 5)",
+                    Toast.LENGTH_SHORT);
+            message.show();
+            rateComment.setText("");
+        }
+
     }
 }
