@@ -46,4 +46,12 @@
         android:layout_marginTop="17dp"
         android:layout_below="@+id/mainActivityButtonShops"
         style="@style/Widget.AppCompat.Button.Colored" />
+    <Button
+        android:text="Моя корзина"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainActivityBasket"
+        android:layout_marginTop="17dp"
+        android:layout_below="@+id/mainActivityButtonCosts"
+        style="@style/Widget.AppCompat.Button.Colored" />
 </RelativeLayout>

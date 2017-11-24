@@ -45,6 +45,11 @@ public class DBHelper  extends SQLiteOpenHelper {
                 + Contract.Price.COLUMN_NAME + " TEXT NOT NULL,"
                 + Contract.Price.COLUMN_NAME_1 + " TEXT NOT NULL); ";
         db.execSQL(SQL_CREATE_P);
+        String SQL_CREATE_BAS = "CREATE TABLE "+ Contract.Basket.TABLE_NAME+ " ("
+                + Contract.Basket._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + Contract.Basket.COLUMN_NAME + " TEXT NOT NULL); ";
+                //+ Contract.Basket.COLUMN_NAME_1 + " TEXT NOT NULL); ";
+        db.execSQL(SQL_CREATE_BAS);
         String SQL_CREATE_l = "CREATE TABLE "+ Contract.List.TABLE_NAME+ " ("
                 + Contract.List._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + Contract.List.COLUMN_NAME + " TEXT NOT NULL); ";
@@ -79,6 +84,7 @@ public class DBHelper  extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE "+ Contract.Prod.TABLE_NAME);
         db.execSQL("DROP TABLE "+ Contract.Pro.TABLE_NAME);
         db.execSQL("DROP TABLE "+ Contract.Pr.TABLE_NAME);
+        db.execSQL("DROP TABLE "+ Contract.Basket.TABLE_NAME);
         onCreate(db);
     }
 
@@ -127,6 +133,35 @@ public class DBHelper  extends SQLiteOpenHelper {
         String[] rows = new String[cursor.getCount()];
 
         int indexTime = cursor.getColumnIndex(Contract.Note.COLUMN_NAME);
+        int indexRows = 0;
+        try
+        {
+            while (cursor.moveToNext())
+            {
+                rows[indexRows] = cursor.getString(indexTime);
+                indexRows++;
+            }
+        }
+        catch (Exception ex)
+        {
+        }
+        finally {
+            cursor.close();
+        }
+        return rows;
+    }
+    public String[] getBasket(String conditionOfChoose)  //корзина
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM "+ Contract.Basket.TABLE_NAME;
+        if(conditionOfChoose != "") query+= " WHERE "+ conditionOfChoose+";";
+
+
+        Cursor cursor = db.rawQuery(query, null);
+        String[] rows = new String[cursor.getCount()];
+
+        int indexTime = cursor.getColumnIndex(Contract.Basket.COLUMN_NAME);
         int indexRows = 0;
         try
         {
@@ -372,6 +407,22 @@ public class DBHelper  extends SQLiteOpenHelper {
         }
 
     }
+    public String insert_Basket(String name)
+    {
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            String query = "INSERT INTO " + Contract.Basket.TABLE_NAME +
+                    " (" + Contract.Basket.COLUMN_NAME  +")" +
+                    " VALUES('" + name +  "');";
+            db.execSQL(query);
+            return "Создание завершено успешно!";
+        }
+        catch (Exception ex)
+        {
+            return ex.getMessage();
+        }
+
+    }
     public String insert_list(String date) // списки
     {
         try {
@@ -436,6 +487,21 @@ public class DBHelper  extends SQLiteOpenHelper {
         }
     }
 
+    public String deleteBas(String date)
+    {
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            String query = "DELETE FROM " + Contract.Basket.TABLE_NAME +
+                    " WHERE " + Contract.Basket.COLUMN_NAME + " = '" + date + "';";
+            db.execSQL(query);
+            return "Успешно удалено!";
+        }
+        catch (Exception ex)
+        {
+            return ex.getMessage();
+        }
+    }
+
     public String delete_cost(String date)
     {
         try {
@@ -455,6 +521,20 @@ public class DBHelper  extends SQLiteOpenHelper {
         try {
             SQLiteDatabase db = this.getWritableDatabase();
             String query = "DELETE FROM " + Contract.Waste.TABLE_NAME +
+                    ";";
+            db.execSQL(query);
+            return "Успешно удалено!";
+        }
+        catch (Exception ex)
+        {
+            return ex.getMessage();
+        }
+    }
+    public String delete_atBasket() //корзина
+    {
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            String query = "DELETE FROM " + Contract.Basket.TABLE_NAME +
                     ";";
             db.execSQL(query);
             return "Успешно удалено!";
