@@ -1,12 +1,19 @@
 package com.example.dmitry.cousework4.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.example.dmitry.cousework4.MapsActivity;
+import com.example.dmitry.cousework4.NotesActivity;
 import com.example.dmitry.cousework4.R;
 //import com.example.dmitry.cousework4.models.models.Shop;
 import com.example.dmitry.cousework4.model.models.Shop;
@@ -33,6 +40,26 @@ public class ShopsActivity extends Activity implements Iview<Shop>{
         listView = findViewById(R.id.activity_shops_listView);
         listView.setOnItemClickListener((adapterView, view, i, l) -> onClickItemListView(i));
         presenterShop.attachView(this);
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View itemClicked, int position, long id) {
+                TextView textView = (TextView) itemClicked;
+                final String strText = textView.getText().toString();
+                AlertDialog.Builder adb = new AlertDialog.Builder( ShopsActivity.this);
+                adb.setTitle("Показать на карте?");
+                adb.setNegativeButton("Отмена     ", null);
+                adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(ShopsActivity.this, MapsActivity.class);
+                        intent.putExtra("shop", strText);
+                        startActivity(intent);
+                    }
+                });
+                adb.show();
+                return true;
+            }
+        });
     }
 
     @Override
