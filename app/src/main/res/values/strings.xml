@@ -13,6 +13,7 @@
     <string name="title_12">Ассортимент</string>
     <string name="title_13">Отзывы</string>
     <string name="title_14">Корзина</string>
+    <string name="title_15">Моиотзывы</string>
 
     <string-array name="products">
         <item>Магазины</item>

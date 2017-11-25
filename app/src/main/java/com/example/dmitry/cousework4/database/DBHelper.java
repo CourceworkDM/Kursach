@@ -40,6 +40,12 @@ public class DBHelper  extends SQLiteOpenHelper {
                 + Contract.Waste.COLUMN_NAME_1 + " TEXT NOT NULL,"
                 + Contract.Waste.COLUMN_NAME_2 + " TEXT NOT NULL); ";
         db.execSQL(SQL_CREATE_T);
+        String SQL_CREATE_COM = "CREATE TABLE "+ Contract.Comment.TABLE_NAME+ " ("
+                + Contract.Comment._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + Contract.Comment.COLUMN_NAME + " TEXT NOT NULL,"
+                + Contract.Comment.COLUMN_NAME_1 + " TEXT NOT NULL,"
+                + Contract.Comment.COLUMN_NAME_2 + " TEXT NOT NULL); ";
+        db.execSQL(SQL_CREATE_COM);
         String SQL_CREATE_P = "CREATE TABLE "+ Contract.Price.TABLE_NAME+ " ("
                 + Contract.Price._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + Contract.Price.COLUMN_NAME + " TEXT NOT NULL,"
@@ -85,6 +91,7 @@ public class DBHelper  extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE "+ Contract.Pro.TABLE_NAME);
         db.execSQL("DROP TABLE "+ Contract.Pr.TABLE_NAME);
         db.execSQL("DROP TABLE "+ Contract.Basket.TABLE_NAME);
+        db.execSQL("DROP TABLE "+ Contract.Comment.TABLE_NAME);
         onCreate(db);
     }
 
@@ -168,6 +175,35 @@ public class DBHelper  extends SQLiteOpenHelper {
             while (cursor.moveToNext())
             {
                 rows[indexRows] = cursor.getString(indexTime);
+                indexRows++;
+            }
+        }
+        catch (Exception ex)
+        {
+        }
+        finally {
+            cursor.close();
+        }
+        return rows;
+    }
+    public String[] getComment(String conditionOfChoose)  //отзыв
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM "+ Contract.Comment.TABLE_NAME;
+        if(conditionOfChoose != "") query+= " WHERE "+ conditionOfChoose+";";
+        Cursor cursor = db.rawQuery(query, null);
+        String[] rows = new String[cursor.getCount()];
+
+        int indexTime = cursor.getColumnIndex(Contract.Comment.COLUMN_NAME);
+        int indexDoing = cursor.getColumnIndex(Contract.Comment.COLUMN_NAME_1);
+        int indexDo = cursor.getColumnIndex(Contract.Comment.COLUMN_NAME_2);
+        int indexRows = 0;
+        try
+        {
+            while (cursor.moveToNext())
+            {
+                rows[indexRows] = cursor.getString(indexTime)+ ", оценка:"  + cursor.getString(indexDo);
                 indexRows++;
             }
         }
@@ -374,6 +410,22 @@ public class DBHelper  extends SQLiteOpenHelper {
         }
 
     }
+
+    public String insert_comment(String date, String money, String dat) ///отзыв
+    {
+            try {
+                SQLiteDatabase db = this.getWritableDatabase();
+                String query = "INSERT INTO " + Contract.Comment.TABLE_NAME +
+                        " (" + Contract.Comment.COLUMN_NAME + "," + Contract.Comment.COLUMN_NAME_1 + "," + Contract.Comment.COLUMN_NAME_2 + ")" +
+                        " VALUES('" + date + "','" + money + "','" + dat + "');";
+                db.execSQL(query);
+                return "Создание завершено успешно!";
+            } catch (Exception ex) {
+                return ex.getMessage();
+            }
+
+    }
+
     public String insert_cost_test()
     {
         try {
