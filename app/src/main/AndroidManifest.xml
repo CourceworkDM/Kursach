@@ -35,6 +35,9 @@
         <activity android:name=".activity.BasketActivity">
             android:label = "@string/title_14">
         </activity>
+        <activity android:name=".activity.ActivityMycomment">
+            android:label = "@string/title_15">
+        </activity>
 
         <activity android:name=".CostsCalendarActivity">
             android:label = "@string/title_10">
