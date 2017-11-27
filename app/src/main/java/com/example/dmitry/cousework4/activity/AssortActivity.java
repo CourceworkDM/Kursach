@@ -41,21 +41,15 @@ public class AssortActivity extends Activity implements Iview<Product>{
         presenter.attachView(this);
         DB = new DBHelper(this, Contract.Basket.TABLE_NAME, null, 1);
         buttonComment.setOnClickListener((View view) -> toCommentActivity());
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
-                TextView textView = (TextView) itemClicked;
-                final String strText = textView.getText().toString();
-                //final String price = DB.getPrice(Contract.Price.COLUMN_NAME + " = '" + strText + "'");
-                AlertDialog.Builder adb=new AlertDialog.Builder(AssortActivity.this);
-                adb.setTitle(" Добавить в корзину?");
-                adb.setNegativeButton("Отмена     ", null);
-                adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        DB.insert_Basket(strText);
-                    }});
-                adb.show();
-            }
+
+        listView.setOnItemClickListener((parent, itemClicked, position, id) -> {
+            TextView textView = (TextView) itemClicked;
+            final String strText = textView.getText().toString();
+            AlertDialog.Builder adb=new AlertDialog.Builder(AssortActivity.this);
+            adb.setTitle(" Добавить в корзину?");
+            adb.setNegativeButton("Отмена     ", null);
+            adb.setPositiveButton("Ok", (dialog, which) -> DB.insert_Basket(strText));
+            adb.show();
         });
     }
 

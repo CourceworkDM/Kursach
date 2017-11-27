@@ -42,33 +42,16 @@ public class CommentActivity extends Activity implements Iview<Comment>{
         addComment = findViewById(R.id.activity_comment_floatingActionButton);
         addComment.setOnClickListener((View view) -> toCreateComment());
         presenter.attachView(this);
-        filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                AlertDialog.Builder adb=new AlertDialog.Builder(CommentActivity.this);
-                adb.setTitle("Отфильтровать отзывы?");
-                adb.setNegativeButton("Отмена     ", null);
-                adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(CommentActivity.this, ActivityMycomment.class);
-                        startActivity(intent);
-                    }});
-                adb.show();
-            }
+        filter.setOnClickListener(v -> {
+            AlertDialog.Builder adb=new AlertDialog.Builder(CommentActivity.this);
+            adb.setTitle("Отфильтровать отзывы?");
+            adb.setNegativeButton("Отмена     ", null);
+            adb.setPositiveButton("Ok", (dialog, which) -> {
+                Intent intent = new Intent(CommentActivity.this, ActivityMycomment.class);
+                startActivity(intent);
+            });
+            adb.show();
         });
-    }
-
-    public void Method(){
-        try {
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                    DB.getComment(Contract.Comment._ID + "> 0"));
-            listView.setAdapter(adapter);
-        }
-        catch (Exception ex) {
-            Toast t = Toast.makeText(this, ex.getMessage(),Toast.LENGTH_LONG);
-            t.show();
-        }
     }
 
     @Override

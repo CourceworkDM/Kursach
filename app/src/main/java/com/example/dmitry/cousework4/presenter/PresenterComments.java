@@ -1,11 +1,17 @@
 package com.example.dmitry.cousework4.presenter;
 
+import android.content.Context;
 import android.util.Log;
 import android.util.Pair;
 
+import com.example.dmitry.cousework4.database.Contract;
+import com.example.dmitry.cousework4.database.DBHelper;
 import com.example.dmitry.cousework4.model.models.Comment;
 import com.example.dmitry.cousework4.model.repository.CommentsRepository;
 import com.example.dmitry.cousework4.view.Iview;
+
+import java.util.Arrays;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -15,6 +21,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class PresenterComments {
+    private DBHelper DB;
 
     private static final String LOG_TAG = "PresenterComments";
 
@@ -62,7 +69,6 @@ public class PresenterComments {
         view = null;
     }
 
-
     public Pair<Integer, Boolean> checkRate(String rate) {
         Pair<Integer, Boolean> result;
         int rateCheck = 0;
@@ -78,6 +84,12 @@ public class PresenterComments {
             return new Pair<>(rateCheck, true);
         }
         return new Pair<>(rateCheck, false);
+    }
+
+    public List<String> getLocalComments(Context context) {
+        DB = new DBHelper(context, Contract.Comment.TABLE_NAME, null, 1);
+        return Arrays.asList(DB.getComment(Contract.Comment._ID + "> 0"));
+
     }
 
 }
