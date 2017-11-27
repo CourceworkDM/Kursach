@@ -36,7 +36,10 @@ public class ActivityCommentCrUpd extends Activity implements Iview<Comment> {
 
     @Override
     public void onReseived(List<Comment> list) {
-
+        Comment aloneComment = list.get(0);//он всё равно один придёт с сервера
+        DB.insert_comment(aloneComment.getCommentLine(),
+                String.valueOf(aloneComment.getId()),
+                String.valueOf(aloneComment.getRate()));
     }
 
     @Override
@@ -52,7 +55,7 @@ public class ActivityCommentCrUpd extends Activity implements Iview<Comment> {
             int rate = presenter.checkRate(rateComment.getText().toString()).first;
             int id = getIntent().getIntExtra("id", -1);
             presenter.sendNewComment(textcomment, rate, id);
-            DB.insert_comment(textcomment, String.valueOf(id),String.valueOf(rate));
+
             Toast message = Toast.makeText(this,"Комментарий отправлен!", Toast.LENGTH_SHORT);
             message.show();
             this.finish();

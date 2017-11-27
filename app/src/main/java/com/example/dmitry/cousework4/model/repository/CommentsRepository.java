@@ -24,4 +24,8 @@ public class CommentsRepository {
         return restService.createComment(comment);
     }
 
+    public Observable<Boolean> deleteComment(Comment comment) {
+        return restService.deleteComment(comment);
+    }
+
 }

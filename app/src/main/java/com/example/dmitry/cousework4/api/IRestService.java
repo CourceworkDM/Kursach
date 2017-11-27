@@ -36,11 +36,13 @@ public interface IRestService {
     @POST("create_comment")
     Observable<Integer> createComment(@Part("comment") Comment comment);// не использовал @Body, так как сервер принимает Form
 
+    @Multipart
     @POST("update_comment")
-    void updateComment(@Body Comment comment);
+    Observable<Boolean> updateComment(@Part("comment") Comment comment);
 
+    @Multipart
     @POST("delete_comment")
-    void deleteComment(@Body Comment comment);
+    Observable<Boolean> deleteComment(@Part("comment") Comment comment);
 
 
 }

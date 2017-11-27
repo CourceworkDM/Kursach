@@ -8,8 +8,10 @@ import com.example.dmitry.cousework4.database.Contract;
 import com.example.dmitry.cousework4.database.DBHelper;
 import com.example.dmitry.cousework4.model.models.Comment;
 import com.example.dmitry.cousework4.model.repository.CommentsRepository;
+import com.example.dmitry.cousework4.view.ISuccess;
 import com.example.dmitry.cousework4.view.Iview;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,10 +29,16 @@ public class PresenterComments {
 
     private Iview<Comment> view;
 
+    private ISuccess viewSucces;
+
     private final CommentsRepository repository = new CommentsRepository();
 
     public void attachView(Iview<Comment> view) {
         this.view = view;
+    }
+
+    public void attachSuccessView(ISuccess view) {
+        this.viewSucces = view;
     }
 
     public void loadCommentsFrom(int id) {
@@ -58,15 +66,39 @@ public class PresenterComments {
         newComment.setRate(rate);
         newComment.setShopFK(String.valueOf(id));//все равно это изменится сервером
 
+        //после отправки сохраняется в локальную БД (для отображения комментариев, что оставил сам пользователь)
         repository.sendNewCommentToServer(newComment)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(newId -> newComment.setId(newId),
+                .subscribe(newId -> {
+                    List<Comment> aloneComment = new ArrayList<Comment>();
+                    newComment.setId(newId);
+                    aloneComment.add(newComment);
+                    view.onReseived(aloneComment);
+                    },
                         throwable -> Log.e(LOG_TAG, throwable.getMessage()));
+
+    }
+
+    public void deleteComment(Comment comment)
+    {
+        repository.deleteComment(comment)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(isSuccess ->viewSucces.onReseived(isSuccess),
+                        throwable -> {
+                            Log.e(LOG_TAG, throwable.getMessage());
+                            viewSucces.onReseived(false);
+                        });
+
     }
 
     public void detachView() {
         view = null;
+    }
+
+    public void detachSuccessView() {
+        viewSucces = null;
     }
 
     public Pair<Integer, Boolean> checkRate(String rate) {
