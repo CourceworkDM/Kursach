@@ -86,9 +86,15 @@ public class PresenterComments {
         return new Pair<>(rateCheck, false);
     }
 
-    public List<String> getLocalComments(Context context) {
+    public void getLocalComments(Context context) {
         DB = new DBHelper(context, Contract.Comment.TABLE_NAME, null, 1);
-        return Arrays.asList(DB.getComment(Contract.Comment._ID + "> 0"));
+        if (view != null) {
+            view.onReseived(DB.getComment(Contract.Comment._ID + "> 0"));
+        }
+        else {
+            Log.e(LOG_TAG, "View is null!");
+        }
+
 
     }
 

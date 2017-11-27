@@ -5,6 +5,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.dmitry.cousework4.model.models.Comment;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Mary on 03.05.2017.
  */
@@ -186,14 +191,14 @@ public class DBHelper  extends SQLiteOpenHelper {
         }
         return rows;
     }
-    public String[] getComment(String conditionOfChoose)  //отзыв
+    public List<Comment> getComment(String conditionOfChoose)  //отзыв
     {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT * FROM "+ Contract.Comment.TABLE_NAME;
         if(conditionOfChoose != "") query+= " WHERE "+ conditionOfChoose+";";
         Cursor cursor = db.rawQuery(query, null);
-        String[] rows = new String[cursor.getCount()];
+        List<Comment> comments = new ArrayList<>();
 
         int indexTime = cursor.getColumnIndex(Contract.Comment.COLUMN_NAME);
         int indexDoing = cursor.getColumnIndex(Contract.Comment.COLUMN_NAME_1);
@@ -203,8 +208,11 @@ public class DBHelper  extends SQLiteOpenHelper {
         {
             while (cursor.moveToNext())
             {
-                rows[indexRows] = cursor.getString(indexTime)+ ", оценка:"  + cursor.getString(indexDo);
-                indexRows++;
+                Comment comment = new Comment();
+                comment.setId(Integer.valueOf(cursor.getString(indexDoing)));
+                comment.setCommentLine(cursor.getString(indexTime));
+                comment.setRate(Integer.valueOf(cursor.getString(indexDo)));
+                comments.add(comment);
             }
         }
         catch (Exception ex)
@@ -213,7 +221,7 @@ public class DBHelper  extends SQLiteOpenHelper {
         finally {
             cursor.close();
         }
-        return rows;
+        return comments;
     }
     public String[] getCost(String conditionOfChoose) //вывод даты??
     {
