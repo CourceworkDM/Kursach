@@ -1,6 +1,7 @@
 package com.example.dmitry.cousework4.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,16 +38,22 @@ public class ActivityMycomment extends Activity implements Iview<Comment>, ISucc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mycomment);
         listView = findViewById(R.id.list);
-        listView.setOnItemClickListener((adapterView, view, i, l) -> {
-            //редактирование
 
+        //редактирование
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            Comment currentComment = (Comment)listView.getAdapter().getItem(i);
+            //presenter.editComment(currentComment);
+            item = i;
+            startEditActivity(currentComment);
         });
 
+        //удаление
         listView.setOnItemLongClickListener((adapterView, view, i, l) -> {
             presenter.deleteComment((Comment)listView.getAdapter().getItem(i));
             item = i;
             userMode = Mode.delete.name();
             return false; });
+
         presenter.attachView(this);
         presenter.attachSuccessView(this);
     }
@@ -85,7 +92,7 @@ public class ActivityMycomment extends Activity implements Iview<Comment>, ISucc
                 message = "Успешно удалено";
             }
             else {
-                //тут изменить элемент
+                adapter.remove(adapter.getItem(item+1));//так как вставили уже новый коммент
             }
         }
         else {
@@ -93,5 +100,36 @@ public class ActivityMycomment extends Activity implements Iview<Comment>, ISucc
         }
         Toast t = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         t.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            String newCommentLine = data.getStringExtra("commentLine");
+            String newRate = data.getStringExtra("rate");
+            String id = data.getStringExtra("id");
+            Comment newComment = new Comment();
+            newComment.setId(Integer.valueOf(id));
+            newComment.setCommentLine(newCommentLine);
+            newComment.setRate(Integer.valueOf(newRate));
+            newComment.setShopFK("3");
+            presenter.editComment(newComment);
+            adapter.insert(newComment,item);
+
+        }
+        catch (Exception ex) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    public void startEditActivity(Comment currentComment) {
+        userMode = Mode.edit.name();
+        Intent intent = new Intent(ActivityMycomment.this, ActivityCommentCrUpd.class);
+        intent.putExtra("mode", Mode.edit);
+        intent.putExtra("commentLine", currentComment.getCommentLine());
+        intent.putExtra("rate", currentComment.getRate());
+        intent.putExtra("id", currentComment.getId());
+        startActivityForResult(intent,1);
+
     }
 }

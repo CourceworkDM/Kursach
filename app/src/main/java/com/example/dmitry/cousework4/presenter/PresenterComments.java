@@ -80,8 +80,7 @@ public class PresenterComments {
 
     }
 
-    public void deleteComment(Comment comment)
-    {
+    public void deleteComment(Comment comment)    {
         repository.deleteComment(comment)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -91,6 +90,17 @@ public class PresenterComments {
                             viewSucces.onReseived(false);
                         });
 
+    }
+
+    public void editComment(Comment comment) {
+        repository.updateComment(comment)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(isSuccess ->viewSucces.onReseived(isSuccess),
+                        throwable -> {
+                            Log.e(LOG_TAG, throwable.getMessage());
+                            viewSucces.onReseived(false);
+                        });
     }
 
     public void detachView() {
