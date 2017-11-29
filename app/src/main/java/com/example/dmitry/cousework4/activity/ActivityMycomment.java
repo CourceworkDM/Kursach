@@ -3,6 +3,7 @@ package com.example.dmitry.cousework4.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,6 +23,7 @@ import java.util.List;
  */
 
 public class ActivityMycomment extends Activity implements Iview<Comment>, ISuccess {
+    private static final String LOG_TAG = "ActivityMycomment";
     private ListView listView;
     private ArrayAdapter<Comment> adapter;
     private final PresenterComments presenter = new PresenterComments();
@@ -30,9 +32,8 @@ public class ActivityMycomment extends Activity implements Iview<Comment>, ISucc
     String delete = "delete";
     String edit = "edit";
     String userMode = "";
-    enum Mode  {delete, edit};
+    enum Mode  {delete, edit}
 
-    private int mode = 0;  //1 - edit ; 2 - delete
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,14 +86,15 @@ public class ActivityMycomment extends Activity implements Iview<Comment>, ISucc
 
     @Override
     public void onReseived(boolean isSuccess) {
+        Log.d(LOG_TAG, String.valueOf(isSuccess));
         String message = "";
         if (isSuccess) {
-            if (userMode == Mode.delete.name()) {
+            if (userMode.equals(Mode.delete.name())) {
                 adapter.remove((Comment)listView.getAdapter().getItem(item));
                 message = "Успешно удалено";
             }
             else {
-                adapter.remove(adapter.getItem(item+1));//так как вставили уже новый коммент
+                message = "Редактирование успешно";
             }
         }
         else {
@@ -108,13 +110,18 @@ public class ActivityMycomment extends Activity implements Iview<Comment>, ISucc
             String newCommentLine = data.getStringExtra("commentLine");
             String newRate = data.getStringExtra("rate");
             String id = data.getStringExtra("id");
+
             Comment newComment = new Comment();
             newComment.setId(Integer.valueOf(id));
             newComment.setCommentLine(newCommentLine);
             newComment.setRate(Integer.valueOf(newRate));
-            newComment.setShopFK("3");
+            newComment.setShopFK("3");//ни на что не влияет
+
             presenter.editComment(newComment);
-            adapter.insert(newComment,item);
+
+
+            //тут надо обновлять список
+
 
         }
         catch (Exception ex) {
@@ -130,6 +137,5 @@ public class ActivityMycomment extends Activity implements Iview<Comment>, ISucc
         intent.putExtra("rate", currentComment.getRate());
         intent.putExtra("id", currentComment.getId());
         startActivityForResult(intent,1);
-
     }
 }

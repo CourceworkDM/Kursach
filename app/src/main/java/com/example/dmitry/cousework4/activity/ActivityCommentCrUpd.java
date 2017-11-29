@@ -34,26 +34,25 @@ public class ActivityCommentCrUpd extends Activity implements Iview<Comment> {
         setContentView(R.layout.activity_comment_cr_upd);
 
         DB = new DBHelper(this, Contract.Comment.TABLE_NAME, null, 1);
+
         buttonToServer = findViewById(R.id.activity_comment_cr_upd_button_send);
-        buttonToServer.setOnClickListener((View view)-> sendToServer());
+        buttonToServer.setOnClickListener((View view) -> sendToServer());
+
         etComment = findViewById(R.id.activity_comment_cr_upd_edittext);
         rateComment = findViewById(R.id.activity_comment_cr_upd_ratetext);
+
         presenter.attachView(this);
 
-        //если режим редактирования
+        //если режим редактирования, вызываем editMode
         Object objOfIntent = getIntent().getExtras().get("mode");
-        if(objOfIntent != null && objOfIntent.toString().equals("edit")) {//nullExc
-            buferComment = new Comment();
-            buferComment.setId(Integer.valueOf(getIntent().getExtras().get("id").toString()));
-            buferComment.setRate(Integer.valueOf(getIntent().getExtras().get("rate").toString()));
-            buferComment.setCommentLine(getIntent().getExtras().get("commentLine").toString());
-            editMode(buferComment);
+        if (objOfIntent != null && objOfIntent.toString().equals("edit")) {
+            editModeUI();
         }
     }
 
     @Override
     public void onReseived(List<Comment> list) {
-        Comment aloneComment = list.get(0);//он всё равно один придёт с сервера
+        Comment aloneComment = list.get(0);//комментарий всё равно один придёт с сервера
         DB.insert_comment(aloneComment.getCommentLine(),
                 String.valueOf(aloneComment.getId()),
                 String.valueOf(aloneComment.getRate()));
@@ -66,51 +65,64 @@ public class ActivityCommentCrUpd extends Activity implements Iview<Comment> {
     }
 
     private void sendToServer() {
-        String textcomment = etComment.getText().toString();
-
         //если редактирование
         if (isEditMode) {
-            //установим новые значения
-            buferComment.setCommentLine(etComment.getText().toString());
-            buferComment.setRate(Integer.valueOf(rateComment.getText().toString()));
-            //и передадим обратно в пред активити после проверки
-            if (presenter.checkRate(rateComment.getText().toString()).second) {
-                Intent data = new Intent();
-                data.putExtra("commentLine", buferComment.getCommentLine());
-                data.putExtra("id", String.valueOf(buferComment.getId()));
-                data.putExtra("rate", String.valueOf(buferComment.getRate()));
-                setResult(RESULT_OK, data);
-                finish();
-            }
-            else {
-                Toast t = Toast.makeText(this, "Неправильная оценка! (Она должна быть в диапазоне от 1 до 5)",
-                        Toast.LENGTH_SHORT);
-            }
-        return;
+            sendToServerEditing();
+        } else {//если добавление
+            sendToServerAdding();
         }
+    }
 
-        //если добавление
-        //проверка данных
+    private void sendToServerEditing() {
+        //установим новые значения
+        buferComment.setCommentLine(etComment.getText().toString());
+        buferComment.setRate(Integer.valueOf(rateComment.getText().toString()));
+
+        //и передадим обратно в пред активити после проверки
+        if (presenter.checkRate(rateComment.getText().toString()).second) {
+            Intent data = new Intent();
+
+            data.putExtra("commentLine", buferComment.getCommentLine());
+            data.putExtra("id", String.valueOf(buferComment.getId()));
+            data.putExtra("rate", String.valueOf(buferComment.getRate()));
+            setResult(RESULT_OK, data);
+            this.finish();
+        } else {
+            Toast t = Toast.makeText(this, "Неправильная оценка! (Она должна быть в диапазоне от 1 до 5)",
+                    Toast.LENGTH_SHORT);
+            t.show();
+        }
+    }
+
+    private void sendToServerAdding() {
+        String textcomment = etComment.getText().toString();
+
+        //проверка данных и отправка на сервер
         if (presenter.checkRate(rateComment.getText().toString()).second) {
             int rate = presenter.checkRate(rateComment.getText().toString()).first;
-            int id = getIntent().getIntExtra("id", -1);
-            presenter.sendNewComment(textcomment, rate, id);
+            int foreign_id = getIntent().getIntExtra("id", -1);//это id магазина!
+            presenter.sendNewComment(textcomment, rate, foreign_id);
 
-            Toast message = Toast.makeText(this,"Комментарий отправлен!", Toast.LENGTH_SHORT);
+            Toast message = Toast.makeText(this, "Комментарий отправлен!", Toast.LENGTH_SHORT);
             message.show();
             this.finish();
-        }
-        else {
-            Toast message = Toast.makeText(this,"Неправильная оценка! (Она должна быть в диапазоне от 1 до 5)",
+        } else {
+            Toast message = Toast.makeText(this, "Неправильная оценка! (Она должна быть в диапазоне от 1 до 5)",
                     Toast.LENGTH_SHORT);
             message.show();
             rateComment.setText("");
         }
+
     }
 
-    public void editMode(Comment comment) {
-        etComment.setText(comment.getCommentLine());
-        rateComment.setText(String.valueOf(comment.getRate()));
+    public void editModeUI() {
+        buferComment = new Comment();
+        buferComment.setId(Integer.valueOf(getIntent().getExtras().get("id").toString()));//это id комментария
+        buferComment.setRate(Integer.valueOf(getIntent().getExtras().get("rate").toString()));
+        buferComment.setCommentLine(getIntent().getExtras().get("commentLine").toString());
+
+        etComment.setText(buferComment.getCommentLine());
+        rateComment.setText(String.valueOf(buferComment.getRate()));
         this.isEditMode = true;
     }
 }

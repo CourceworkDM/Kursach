@@ -7,5 +7,5 @@ import java.util.List;
  */
 
 public interface ISuccess {
-    void onReseived(boolean isSucces);
+    void onReseived(boolean isSuccess);
 }

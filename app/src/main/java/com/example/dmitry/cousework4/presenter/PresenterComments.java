@@ -49,7 +49,7 @@ public class PresenterComments {
                             if (view != null) {
                                 view.onReseived(comments);
                             }
-                        }, throwable  -> {
+                        }, throwable -> {
                             Log.e(LOG_TAG, throwable.getMessage());
 
                             if (view == null) {
@@ -59,47 +59,46 @@ public class PresenterComments {
                 );
     }
 
-    public void sendNewComment(String comment,int rate, int id) {
+    public void sendNewComment(String comment, int rate, int foreign_id) {
 
         Comment newComment = new Comment();
         newComment.setCommentLine(comment);
         newComment.setRate(rate);
-        newComment.setShopFK(String.valueOf(id));//все равно это изменится сервером
+        newComment.setShopFK(String.valueOf(foreign_id));
 
         //после отправки сохраняется в локальную БД (для отображения комментариев, что оставил сам пользователь)
         repository.sendNewCommentToServer(newComment)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(newId -> {
-                    List<Comment> aloneComment = new ArrayList<Comment>();
-                    newComment.setId(newId);
-                    aloneComment.add(newComment);
-                    view.onReseived(aloneComment);
-                    },
+                            List<Comment> aloneComment = new ArrayList<Comment>();
+                            newComment.setId(newId);
+                            aloneComment.add(newComment);
+                            view.onReseived(aloneComment);
+                        },
                         throwable -> Log.e(LOG_TAG, throwable.getMessage()));
 
     }
 
-    public void deleteComment(Comment comment)    {
+    public void deleteComment(Comment comment) {
         repository.deleteComment(comment)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(isSuccess ->viewSucces.onReseived(isSuccess),
+                .subscribe(isSuccess -> viewSucces.onReseived(isSuccess),
                         throwable -> {
                             Log.e(LOG_TAG, throwable.getMessage());
                             viewSucces.onReseived(false);
                         });
-
     }
 
     public void editComment(Comment comment) {
         repository.updateComment(comment)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(isSuccess ->viewSucces.onReseived(isSuccess),
+                .subscribe(isSuccess -> viewSucces.onReseived(isSuccess),
                         throwable -> {
                             Log.e(LOG_TAG, throwable.getMessage());
-                            viewSucces.onReseived(false);
+                            //viewSucces.onReseived(isSuccess);
                         });
     }
 
@@ -112,13 +111,11 @@ public class PresenterComments {
     }
 
     public Pair<Integer, Boolean> checkRate(String rate) {
-        Pair<Integer, Boolean> result;
         int rateCheck = 0;
 
         try {
             rateCheck = Integer.valueOf(rate);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             return new Pair<>(rateCheck, false);
         }
 
@@ -132,12 +129,8 @@ public class PresenterComments {
         DB = new DBHelper(context, Contract.Comment.TABLE_NAME, null, 1);
         if (view != null) {
             view.onReseived(DB.getComment(Contract.Comment._ID + "> 0"));
-        }
-        else {
+        } else {
             Log.e(LOG_TAG, "View is null!");
         }
-
-
     }
-
 }

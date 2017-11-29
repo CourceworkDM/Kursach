@@ -74,7 +74,7 @@ public class CommentActivity extends Activity implements Iview<Comment>{
 
     private void toCreateComment() {
         Intent intent = new Intent(CommentActivity.this, ActivityCommentCrUpd.class);
-        intent.putExtra("id", getIntent().getIntExtra("id", -1));
+        intent.putExtra("id", getIntent().getIntExtra("id", -1)); //это id магазина!
         startActivity(intent);
 
     }
