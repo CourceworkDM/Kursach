@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.dmitry.cousework4.R;
+import com.example.dmitry.cousework4.database.Contract;
+import com.example.dmitry.cousework4.database.DBHelper;
 import com.example.dmitry.cousework4.model.models.Comment;
 import com.example.dmitry.cousework4.presenter.PresenterComments;
 import com.example.dmitry.cousework4.view.ISuccess;
@@ -28,22 +28,28 @@ public class ActivityMycomment extends Activity implements Iview<Comment>, ISucc
     private ArrayAdapter<Comment> adapter;
     private final PresenterComments presenter = new PresenterComments();
     private int item = 0; //для адаптера
+    DBHelper DB;
 
     String delete = "delete";
     String edit = "edit";
     String userMode = "";
     enum Mode  {delete, edit}
+    String st;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mycomment);
         listView = findViewById(R.id.list);
-
+        DB = new DBHelper(this, Contract.Comment.TABLE_NAME, null, 1);
         //редактирование
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
             Comment currentComment = (Comment)listView.getAdapter().getItem(i);
             //presenter.editComment(currentComment);
+            final String strText = listView.getAdapter().getItem(i).toString();
+            String strarr [] = strText.split("\n");
+            st = strarr[1];
+        DB.delete_comment(String.valueOf(st));
             item = i;
             startEditActivity(currentComment);
         });
@@ -90,7 +96,12 @@ public class ActivityMycomment extends Activity implements Iview<Comment>, ISucc
         String message = "";
         if (isSuccess) {
             if (userMode.equals(Mode.delete.name())) {
+                final String strText = listView.getAdapter().getItem(item).toString();
+                String strarr [] = strText.split("\n");
+                st = strarr[1];
+                DB.delete_comment(String.valueOf(st));
                 adapter.remove((Comment)listView.getAdapter().getItem(item));
+
                 message = "Успешно удалено";
             }
             else {
