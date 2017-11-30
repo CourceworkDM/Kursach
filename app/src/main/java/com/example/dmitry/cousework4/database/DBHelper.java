@@ -223,6 +223,22 @@ public class DBHelper  extends SQLiteOpenHelper {
         }
         return comments;
     }
+
+    public String delete_comment(String date)  ///// отзыв!!!!
+    {
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            String query = "DELETE FROM " + Contract.Comment.TABLE_NAME +
+                    " WHERE " + Contract.Comment.COLUMN_NAME + " = '" + date + "';";
+            db.execSQL(query);
+            return "Успешно удалено!";
+        }
+        catch (Exception ex)
+        {
+            return ex.getMessage();
+        }
+    }
+
     public String[] getCost(String conditionOfChoose) //вывод даты??
     {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -576,6 +592,7 @@ public class DBHelper  extends SQLiteOpenHelper {
             return ex.getMessage();
         }
     }
+
     public String delete_all()
     {
         try {
