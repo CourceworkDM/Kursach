@@ -81,11 +81,12 @@ public class ActivityCommentCrUpd extends Activity implements Iview<Comment> {
         //и передадим обратно в пред активити после проверки
         if (presenter.checkRate(rateComment.getText().toString()).second) {
             Intent data = new Intent();
-
+            String st = getIntent().getExtras().get("commentLine").toString();
             data.putExtra("commentLine", buferComment.getCommentLine());
             data.putExtra("id", String.valueOf(buferComment.getId()));
             data.putExtra("rate", String.valueOf(buferComment.getRate()));
             setResult(RESULT_OK, data);
+            DB.delete_comment(st);
             DB.insert_comment(buferComment.getCommentLine(),
                     String.valueOf(buferComment.getId()),
                     String.valueOf(buferComment.getRate()));
