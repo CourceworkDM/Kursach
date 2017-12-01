@@ -46,10 +46,6 @@ public class ActivityMycomment extends Activity implements Iview<Comment>, ISucc
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
             Comment currentComment = (Comment)listView.getAdapter().getItem(i);
             //presenter.editComment(currentComment);
-            final String strText = listView.getAdapter().getItem(i).toString();
-            String strarr [] = strText.split("\n");
-            st = strarr[1];
-        DB.delete_comment(String.valueOf(st));
             item = i;
             startEditActivity(currentComment);
         });
