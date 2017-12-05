@@ -95,10 +95,10 @@ public class ActivityCommentCrUpd extends Activity implements Iview<Comment> {
             data.putExtra("id", String.valueOf(buferComment.getId()));
             data.putExtra("rate", String.valueOf(buferComment.getRate()));
             setResult(RESULT_OK, data);
-            DB.delete_comment(st);
-            DB.insert_comment(buferComment.getCommentLine(),
-                    String.valueOf(buferComment.getId()),
-                    String.valueOf(buferComment.getRate()));
+//            DB.delete_comment(st);
+//            DB.insert_comment(buferComment.getCommentLine(),
+//                    String.valueOf(buferComment.getId()),
+//                    String.valueOf(buferComment.getRate()));
             this.finish();
         } else {
             Toast t = Toast.makeText(this, "Неправильная оценка! (Она должна быть в диапазоне от 1 до 5)",

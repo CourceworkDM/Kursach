@@ -29,6 +29,8 @@ public class ActivityMycomment extends Activity implements Iview<Comment>, ISucc
     private final PresenterComments presenter = new PresenterComments();
     private int item = 0; //для адаптера
     DBHelper DB;
+    Comment currentComment;
+    Comment newComment;
 
     String delete = "delete";
     String edit = "edit";
@@ -44,7 +46,7 @@ public class ActivityMycomment extends Activity implements Iview<Comment>, ISucc
         DB = new DBHelper(this, Contract.Comment.TABLE_NAME, null, 1);
         //редактирование
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
-            Comment currentComment = (Comment)listView.getAdapter().getItem(i);
+            currentComment = (Comment)listView.getAdapter().getItem(i);
             //presenter.editComment(currentComment);
             item = i;
             startEditActivity(currentComment);
@@ -101,11 +103,16 @@ public class ActivityMycomment extends Activity implements Iview<Comment>, ISucc
                 message = "Успешно удалено";
             }
             else {
+                DB.delete_comment(currentComment.getCommentLine());
+                DB.insert_comment(newComment.getCommentLine(),
+                        String.valueOf(newComment.getId()),
+                        String.valueOf(newComment.getRate()));
                 message = "Редактирование успешно";
             }
+            presenter.getLocalComments(this);
         }
         else {
-            message = "Что-то пошло не так. Попробуйте позже";
+            message = "Что-то пошло не так. Проверьте подключение к сети";
         }
         Toast t = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         t.show();
@@ -118,13 +125,15 @@ public class ActivityMycomment extends Activity implements Iview<Comment>, ISucc
             String newRate = data.getStringExtra("rate");
             String id = data.getStringExtra("id");
 
-            Comment newComment = new Comment();
+            newComment = new Comment();
             newComment.setId(Integer.valueOf(id));
             newComment.setCommentLine(newCommentLine);
             newComment.setRate(Integer.valueOf(newRate));
             newComment.setShopFK("3");//ни на что не влияет
 
             presenter.editComment(newComment);
+
+
 
 
             //тут надо обновлять список
