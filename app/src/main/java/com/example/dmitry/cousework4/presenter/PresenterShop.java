@@ -40,6 +40,9 @@ public class PresenterShop{
                             if (view == null) {
                                 Log.e(LOG_TAG, "ERROR: variable #view# is null");
                             }
+                            else {
+                                view.onReseived(null);
+                            }
                         }
                 );
     }

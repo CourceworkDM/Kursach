@@ -74,9 +74,13 @@ public class PresenterComments {
                             List<Comment> aloneComment = new ArrayList<Comment>();
                             newComment.setId(newId);
                             aloneComment.add(newComment);
+                            Log.d(LOG_TAG, "newID" + String.valueOf(newId));
                             view.onReseived(aloneComment);
                         },
-                        throwable -> Log.e(LOG_TAG, throwable.getMessage()));
+                        throwable -> {
+                            Log.e(LOG_TAG, throwable.getMessage());
+                            view.onReseived(null);
+                        });
 
     }
 
@@ -98,7 +102,7 @@ public class PresenterComments {
                 .subscribe(isSuccess -> viewSucces.onReseived(isSuccess),
                         throwable -> {
                             Log.e(LOG_TAG, throwable.getMessage());
-                            //viewSucces.onReseived(isSuccess);
+                            viewSucces.onReseived(false);
                         });
     }
 

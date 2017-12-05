@@ -52,10 +52,19 @@ public class ActivityCommentCrUpd extends Activity implements Iview<Comment> {
 
     @Override
     public void onReseived(List<Comment> list) {
+        //null - если связи нету с сервером
+        if (list == null) {
+            Toast t = Toast.makeText(this, "Что-то пошло не так. Проверьте подключение к интернету",
+                    Toast.LENGTH_SHORT);
+            t.show();
+            return;
+        }
         Comment aloneComment = list.get(0);//комментарий всё равно один придёт с сервера
         DB.insert_comment(aloneComment.getCommentLine(),
                 String.valueOf(aloneComment.getId()),
                 String.valueOf(aloneComment.getRate()));
+        Toast message = Toast.makeText(this, "Комментарий отправлен!", Toast.LENGTH_SHORT);
+        message.show();
     }
 
     @Override
@@ -107,8 +116,7 @@ public class ActivityCommentCrUpd extends Activity implements Iview<Comment> {
             int foreign_id = getIntent().getIntExtra("id", -1);//это id магазина!
             presenter.sendNewComment(textcomment, rate, foreign_id);
 
-            Toast message = Toast.makeText(this, "Комментарий отправлен!", Toast.LENGTH_SHORT);
-            message.show();
+
             this.finish();
         } else {
             Toast message = Toast.makeText(this, "Неправильная оценка! (Она должна быть в диапазоне от 1 до 5)",

@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dmitry.cousework4.MapsActivity;
 import com.example.dmitry.cousework4.NotesActivity;
@@ -71,6 +72,12 @@ public class ShopsActivity extends Activity implements Iview<Shop>{
 
     @Override
     public void onReseived(List<Shop> list) {
+        if (list == null) {
+            Toast t = Toast.makeText(this, "Что-то пошло не так. Проверьте подключение к интернету",
+                    Toast.LENGTH_SHORT);
+            t.show();
+            return;
+        }
         ArrayAdapter<Shop> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         listView.setAdapter(adapter);
         Log.d(LOG_TAG, String.valueOf(adapter.getCount()));
