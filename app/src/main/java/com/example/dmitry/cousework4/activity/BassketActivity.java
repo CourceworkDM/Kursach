@@ -81,13 +81,23 @@ public class BassketActivity extends Activity {
                         int Day = c.get(Calendar.DAY_OF_MONTH);
                         final String date = String.valueOf(Year) + "/" + String.valueOf(Month) + "/" + String.valueOf(Day);
                         DB2.insert_cost(srtarr[0], srtarr[srtarr.length-1] , date );
-                        adapter.remove(strText);
-                        listView.setAdapter(adapter);
+                        DB.deleteBas(strText);
+                        Method();
                     }});
                 adb.show();
             }
         });
 
     }
-
+    public void Method(){
+        try {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+                    DB.getBasket(Contract.Basket._ID + "> 0"));
+            listView.setAdapter(adapter);
+        }
+        catch (Exception ex) {
+            Toast t = Toast.makeText(this, ex.getMessage(),Toast.LENGTH_LONG);
+            t.show();
+        }
+    }
 }
