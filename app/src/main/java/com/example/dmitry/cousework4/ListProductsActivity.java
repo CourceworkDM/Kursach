@@ -128,7 +128,7 @@ String list;
                         final Calendar c = Calendar.getInstance();
                         int Year = c.get(Calendar.YEAR);
                         int Month = c.get(Calendar.MONTH)+1;
-                        int Day = c.get(Calendar.DAY_OF_MONTH)+1;
+                        int Day = c.get(Calendar.DAY_OF_MONTH);
                         final String date = String.valueOf(Year) + "/" + String.valueOf(Month) + "/" + String.valueOf(Day);
                         DB1.insert_cost(strText, price , date );
                     }});
